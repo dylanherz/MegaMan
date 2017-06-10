@@ -20,7 +20,7 @@ import rbadia.voidspace.model.MegaMan;
 /**
  * Handles user input events.
  */
-public class InputHandler implements KeyListener{
+public class InputHandler implements KeyListener {
 	private boolean leftIsPressed;
 	private boolean rightIsPressed;
 	private boolean downIsPressed;
@@ -30,6 +30,7 @@ public class InputHandler implements KeyListener{
 	private boolean eIsPressed;
 	private boolean qIsPressed;
 	private boolean mIsPressed;
+	private boolean nIsPressed;
 
 	private long lastBulletTime;
 	private long lastExchangeTime;
@@ -99,7 +100,33 @@ public class InputHandler implements KeyListener{
 
 				}
 			}
-
+			if(nIsPressed){
+				long currentTime = System.currentTimeMillis();
+				if((currentTime - lastExchangeTime > 1000)){
+					lastExchangeTime = currentTime;
+					
+					status.setLevel(status.getLevel() +1);
+					
+					switch(status.getLevel()){
+						case 2:
+							gameScreen.restructure();
+							gameScreen.setBoom(2);
+						break;
+						
+						case 3:
+							gameScreen.restructure();
+							gameScreen.setBoom(8);
+						break;
+						
+//						case 4:
+//							gameScreen.setBoom(19);
+//						break;
+					}
+	
+				}
+//				else if(!status.isNewAsteroid() && gScreen.getBoom() > 2){
+					
+}
 			//WIP
 			//			if(mIsPressed){
 			//				mute=1;
@@ -304,13 +331,20 @@ public class InputHandler implements KeyListener{
 				this.qIsPressed= true;
 			}
 			break;
-
-		case KeyEvent.VK_M:
-			this.mIsPressed= true;
+			
+		case KeyEvent.VK_N:
+			if(!status.isGameStarted() && !status.isGameOver() && !status.isGameStarting() && !status.isGameWon()){		
+			}
+			else{
+				this.nIsPressed= true;
+			}
 			break;
+
+//		case KeyEvent.VK_M:
+//			this.mIsPressed= true;
+//			break;
+		
 		}
-
-
 		e.consume();
 	}
 
@@ -348,6 +382,10 @@ public class InputHandler implements KeyListener{
 
 		case KeyEvent.VK_M:
 			this.mIsPressed = false;
+			break;
+		
+		case KeyEvent.VK_N:
+			this.nIsPressed = false;
 			break;
 		}
 		e.consume();

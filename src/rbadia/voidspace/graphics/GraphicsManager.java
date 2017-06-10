@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
 import rbadia.voidspace.model.Asteroid;
-//import rbadia.voidspace.model.BigAsteroid;
+import rbadia.voidspace.model.BigAsteroid;
 import rbadia.voidspace.model.BigBullet;
 //import rbadia.voidspace.model.Boss;
 import rbadia.voidspace.model.Bullet;
@@ -35,7 +35,7 @@ public class GraphicsManager {
 	private BufferedImage megaManExplosionImg;
 	//	private BufferedImage bossImg;
 	//	private BufferedImage bossImg2;
-	//	private BufferedImage bigAsteroidImg;
+	private BufferedImage bigAsteroidImg;
 	private BufferedImage bigAsteroidExplosionImg;
 
 	/**
@@ -56,7 +56,7 @@ public class GraphicsManager {
 			//this.megaManExplosionImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/megaManExplosion.png"));
 			this.bulletImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/bullet.png"));
 			this.bigBulletImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/bigBullet.png"));
-			//			this.bigAsteroidImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/BigAsteroid.png"));
+			this.bigAsteroidImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/BigAsteroid.png"));
 			//			this.bigAsteroidExplosionImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/bigAsteroidExplosion.png"));
 
 		} catch (Exception e) {
@@ -127,6 +127,16 @@ public class GraphicsManager {
 		g2d.drawImage(asteroidImg, asteroid.x, asteroid.y, observer);
 	}
 
+	/**
+	 * Draws a big asteroid image to the specified graphics canvas.
+	 * @param BigAsteroid the big asteroid to draw
+	 * @param g2d the graphics canvas
+	 * @param observer object to be notified
+	 */
+	public void drawBigAsteroid(BigAsteroid bigAsteroid, Graphics2D g2d, ImageObserver observer) {
+		g2d.drawImage(bigAsteroidImg, bigAsteroid.x, bigAsteroid.y, observer);
+	}
+	
 	/**
 	 * Draws a ship explosion image to the specified graphics canvas.
 	 * @param shipExplosion the bounding rectangle of the explosion
