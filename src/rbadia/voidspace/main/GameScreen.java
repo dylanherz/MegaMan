@@ -250,7 +250,7 @@ public class GameScreen extends BaseScreen{
 		//LEVEL 3
 		else if (!status.isNewAsteroid() && boom > 8){
 			if((asteroid.getX() + asteroid.getAsteroidWidth() >0)){
-				asteroid.translate(-asteroid.getSpeed(), (asteroid.getSpeed()/2)*4);
+				asteroid.translate(-asteroid.getSpeed(), (asteroid.getSpeed()*4));
 				graphicsMan.drawAsteroid(asteroid, g2d, this);
 			}
 			else if(boom <= 5) {
