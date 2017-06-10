@@ -286,15 +286,6 @@ public class GameScreen extends BaseScreen{
 						rand.nextInt(this.getHeight() - asteroid.getAsteroidHeight() - 32));
 			}
 			
-//		else{
-//			long currentTime = System.currentTimeMillis();
-//			if((currentTime - lastBigAsteroidTime) > NEW_BIG_ASTEROID_DELAY){
-//				// draw a new asteroid
-//				lastBigAsteroidTime = currentTime;
-//				status.setNewBigAsteroid(false);
-//				bigAsteroid.setLocation(this.getWidth() - bigAsteroid.getBigAsteroidWidth(),
-//						rand.nextInt(this.getHeight() - bigAsteroid.getAsteroidHeight() - 32));
-//		}
 		
 		else{
 				// draw explosion
