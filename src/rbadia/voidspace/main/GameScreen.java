@@ -35,8 +35,8 @@ public class GameScreen extends BaseScreen{
 
 	private static final int NEW_SHIP_DELAY = 500;
 	private static final int NEW_ASTEROID_DELAY = 500;
-	//	private static final int NEW_ASTEROID_2_DELAY = 500;
-	//	private static final int NEW_BIG_ASTEROID_DELAY = 500;
+	private static final int NEW_ASTEROID_2_DELAY = 500;
+	private static final int NEW_BIG_ASTEROID_DELAY = 500;
 
 	//	private long lastShipTime;
 	private long lastAsteroidTime;
@@ -130,7 +130,7 @@ public class GameScreen extends BaseScreen{
 		//		Boss boss2 = gameLogic.getBoss2();
 
 
-		// set orignal font - for later use
+		// set original font - for later use
 		if(this.originalFont == null){
 			this.originalFont = g2d.getFont();
 			this.bigFont = originalFont;
@@ -191,19 +191,18 @@ public class GameScreen extends BaseScreen{
 		}
 
 
-		//		if(level==1){
-		//draw Platform LV. 1
-		for(int i=0; i<8; i++){
-			graphicsMan.drawPlatform(numPlatforms[i], g2d, this, i);
-			//			}
+		//if(level==1){
+		//draw Platform LV. 1;
+			for(int i=0; i<8; i++){
+				graphicsMan.drawPlatform(numPlatforms[i], g2d, this, i);
+			//}
 		}
-		//		//draw Platform LV. 2
-		//		else if(level==2){
-		//			for(int i=0; i<8; i++){
-		//			
-		//				graphicsMan.drawPlatform2(numPlatforms[i], g2d, this, i);
-		//			}	
-		//		}
+			//draw Platform LV. 2
+		/*else if(level==2){
+			for(int i=0; i<8; i++){
+				graphicsMan.drawPlatform2(numPlatforms[i], g2d, this, i);
+			}	
+		}*/
 
 		//draw MegaMan
 		if(!status.isNewMegaMan()){
@@ -232,22 +231,33 @@ public class GameScreen extends BaseScreen{
 			else if (boom <= 5){
 				asteroid.setLocation(this.getWidth() - asteroid.getAsteroidWidth(),
 						rand.nextInt(this.getHeight() - asteroid.getAsteroidHeight() - 32));
-			}	
-		}
+				}	
+			}
 
-		else if(!status.isNewAsteroid() && boom > 2){
-			// draw the asteroid until it reaches the bottom of the screen
-			//LEVEL 2
-			if((asteroid.getX() + asteroid.getAsteroidWidth() >  0)){
-				asteroid.translate(-asteroid.getSpeed(), asteroid.getSpeed()/2);
+		// draw the asteroid until it reaches the bottom of the screen
+		//LEVEL 2
+		else if(!status.isNewAsteroid() && boom > 2 && boom <= 7){
+			if((asteroid.getX() + asteroid.getAsteroidWidth() >  0) /*&& (boom <= 9 || boom == 19)*/) {
+				asteroid.translate(-asteroid.getSpeed(), (asteroid.getSpeed()/2)*2);
 				graphicsMan.drawAsteroid(asteroid, g2d, this);	
 			}
 			else if (boom <= 5){
 				asteroid.setLocation(this.getWidth() - asteroid.getAsteroidWidth(),
 						rand.nextInt(this.getHeight() - asteroid.getAsteroidHeight() - 32));
 			}	
+		
 		}
-
+		//LEVEL 3
+		else if (!status.isNewAsteroid() && boom > 8){
+			if((asteroid.getX() + asteroid.getAsteroidWidth() >0)){
+				asteroid.translate(-asteroid.getSpeed(), (asteroid.getSpeed()/2)*4);
+				graphicsMan.drawAsteroid(asteroid, g2d, this);
+			}
+			else if(boom <= 5) {
+				asteroid.setLocation(this.getWidth() - asteroid.getAsteroidWidth(), 
+						rand.nextInt(this.getHeight() - asteroid.getAsteroidHeight() -80));
+				}
+			}
 		else{
 			long currentTime = System.currentTimeMillis();
 			if((currentTime - lastAsteroidTime) > NEW_ASTEROID_DELAY){
@@ -257,13 +267,13 @@ public class GameScreen extends BaseScreen{
 				asteroid.setLocation(this.getWidth() - asteroid.getAsteroidWidth(),
 						rand.nextInt(this.getHeight() - asteroid.getAsteroidHeight() - 32));
 			}
-
-			else{
+		
+		else{
 				// draw explosion
 				graphicsMan.drawAsteroidExplosion(asteroidExplosion, g2d, this);
 			}
 		}
-
+	
 		// draw bullets   
 		for(int i=0; i<bullets.size(); i++){
 			Bullet bullet = bullets.get(i);
@@ -297,17 +307,17 @@ public class GameScreen extends BaseScreen{
 
 				removeAsteroid(asteroid);
 
-
-
-				if(boom != 5 && boom != 15){
+				//if(boom != 5 && boom != 15){
 					boom=boom + 1;
-				}
+				//}
 				damage=0;
 				// remove bullet
 				bullets.remove(i);
 				break;
+				
 			}
 		}
+	
 
 		// check big bullet-asteroid collisions
 		for(int i=0; i<bigBullets.size(); i++){
@@ -318,11 +328,9 @@ public class GameScreen extends BaseScreen{
 
 				removeAsteroid(asteroid);
 
-
-
-				if(boom != 5 && boom != 15){
+				//if(boom != 5 && boom != 15){
 					boom=boom + 1;
-				}
+				//}
 				damage=0;
 			}
 		}
@@ -342,8 +350,12 @@ public class GameScreen extends BaseScreen{
 		}
 		//
 
-		if(boom == 2)
+		if(boom == 2 || boom == 8 /*|| status.getLevel() == 2 || status.getLevel() == 8*/)
 			restructure();
+		
+
+		//if(status.getLevel() == 2)
+			//skipLevel();
 
 		status.getAsteroidsDestroyed();
 		status.getShipsLeft();
@@ -357,7 +369,8 @@ public class GameScreen extends BaseScreen{
 
 		//update level label
 		levelValueLabel.setText(Long.toString(status.getLevel()));
-	}
+		
+}
 
 	/**
 	 * Draws the "Game Over" message.
@@ -418,7 +431,18 @@ public class GameScreen extends BaseScreen{
 		g2d.setPaint(Color.YELLOW);
 		g2d.drawString(newGameStr, strX, strY);
 
-		boom=3;	//Change value in order for the next level to start
+		//boom = 3;
+		if(boom == 2){
+			boom = 3;
+		}
+//		
+		if(boom == 8){
+			boom = 9;
+		}
+		
+		//boom=4;
+		//boom=5;
+		//Change value in order for the next level to start
 
 		//		boomReset();
 		//		healthReset();
@@ -574,6 +598,10 @@ public class GameScreen extends BaseScreen{
 	public int getBoom(){
 		return boom;
 	}
+	
+	public void setBoom(int numBooms){
+		boom = numBooms;
+	}
 	public int boomReset(){
 		boom= 0;
 		return boom;
@@ -659,7 +687,19 @@ public class GameScreen extends BaseScreen{
 		}
 		status.setLevel(status.getLevel() + 1);
 	}
-
+	/*public void skipLevel(){
+		Platform[] platform = gameLogic.getNumPlatforms();
+		for(int i=0; i<8; i++){
+			if(i<4)	platform[i].setLocation(50+ i*50, getHeight()/2 + 140 - i*40);
+			if(i==4) platform[i].setLocation(50 +i*50, getHeight()/2 + 140 - 3*40);
+			if(i>4){	
+				int n=4;
+				platform[i].setLocation(50 + i*50, getHeight()/2 + 20 + (i-n)*40 );
+				n=n+2;
+			}
+		}
+		status.setLevel(status.getLevel());
+	}*/
 	public void removeAsteroid(Asteroid asteroid){
 		// "remove" asteroid
 		asteroidExplosion = new Rectangle(
