@@ -110,10 +110,14 @@ public class InputHandler implements KeyListener {
 					switch(status.getLevel()){
 						case 2:
 							gameScreen.setBoom(2);
+							gameScreen.restructure();
+							
 						break;
 						
 						case 3:
 							gameScreen.setBoom(8);
+							gameScreen.restructure();
+							
 						break;
 					}
 					

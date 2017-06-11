@@ -14,6 +14,8 @@ public class BigAsteroid extends Rectangle {
 	private int bigAsteroidWidth = 64;
 	private int bigAsteroidHeight = 64;
 	private int speed2 = DEFAULT_SPEED2;
+	private int health = 4;
+	private int damage = 0;
 
 	private Random rand = new Random();
 	
@@ -56,4 +58,21 @@ public class BigAsteroid extends Rectangle {
 	public int getDefaultSpeed2(){
 		return DEFAULT_SPEED2;
 	}
+	
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
+
+	public int getDamage() {
+		return damage;
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+
 }

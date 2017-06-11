@@ -55,4 +55,14 @@ public class SoundManager {
     		}).start();	
     	}
     }
+    public void playBigAsteroidExplosionSound(){
+		// play sound for asteroid explosions
+    	if(SOUND_ON){
+    		new Thread(new Runnable(){
+    			public void run() {
+    				shipExplosionSound.play();
+    			}
+    		}).start();	
+    	}
+    }
 }

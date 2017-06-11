@@ -21,16 +21,16 @@ public abstract class BaseScreen extends JPanel {
 
 	protected static final int NEW_SHIP_DELAY = 500;
 	protected static final int NEW_ASTEROID_DELAY = 500;
-	//	protected static final int NEW_ASTEROID_2_DELAY = 500;
-	//	protected static final int NEW_BIG_ASTEROID_DELAY = 500;
+	protected static final int NEW_ASTEROID_2_DELAY = 500;
+	protected static final int NEW_BIG_ASTEROID_DELAY = 500;
 
 	protected long lastShipTime;
 	protected long lastAsteroidTime;
-	//	protected long lastAsteroid2Time;
-	//	protected long lastBigAsteroidTime;
+		protected long lastAsteroid2Time;
+		protected long lastBigAsteroidTime;
 
 	protected Rectangle asteroidExplosion;
-	//	protected Rectangle bigAsteroidExplosion;
+	protected Rectangle bigAsteroidExplosion;
 	//	protected Rectangle shipExplosion;
 	//	protected Rectangle bossExplosion;
 
