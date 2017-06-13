@@ -12,6 +12,8 @@ public class Asteroid extends Rectangle {
 	
 	private int asteroidWidth = 32;
 	private int asteroidHeight = 32;
+	private int asteroid2Width = 32;
+	private int asteroid2Height = 32;
 	private int speed = DEFAULT_SPEED;
 
 	private Random rand = new Random();
@@ -27,11 +29,30 @@ public class Asteroid extends Rectangle {
         		);
 		this.setSize(asteroidWidth, asteroidHeight);
 	}
+	/**
+	 * Crates a new asteroid at a random x location at the top of the screen 
+	 * @param screen the game screen
+	 * @return 
+	 */
+	public void Asteroid2(GameScreen screen) {
+		this.setLocation(
+				screen.getWidth() - asteroid2Width,
+        		rand.nextInt(screen.getHeight() - asteroid2Height - 32)
+        		);
+		this.setSize(asteroid2Width, asteroid2Height);
+	}
 	
 	public int getAsteroidWidth() {
 		return asteroidWidth;
 	}
 	public int getAsteroidHeight() {
+		return asteroidHeight;
+	}
+
+	public int getAsteroid2Width() {
+		return asteroidWidth;
+	}
+	public int getAsteroid2Height() {
 		return asteroidHeight;
 	}
 

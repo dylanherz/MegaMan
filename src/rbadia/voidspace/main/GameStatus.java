@@ -19,6 +19,7 @@ public class GameStatus {
 	private boolean newFloor;
 	private boolean newPlatform;
 	private long asteroidsDestroyed = 0;
+	private long asteroids2Destroyed = 0;
 	private long bigAsteroidsDestroyed = 0;
 	private int shipsLeft;
 	private int level = 1;
@@ -130,7 +131,10 @@ public class GameStatus {
 	public synchronized void setNewAsteroid(boolean newAsteroid) {
 		this.newAsteroid = newAsteroid;
 	}
-	
+	/**
+	 * Indicates if a new asteroid should be created/drawn.
+	 * @return if a new asteroid2 should be created/drawn
+	 */
 	public synchronized boolean isNewAsteroid2() {
 		return newAsteroid2;
 	}
@@ -163,9 +167,34 @@ public class GameStatus {
 	 * Returns the number of asteroid destroyed. 
 	 * @return the number of asteroid destroyed
 	 */
+	public synchronized long getAsteroids2Destroyed() {
+		return asteroids2Destroyed;
+	}
+	/**
+	 * Returns the number of asteroid destroyed. 
+	 * @return the number of asteroid destroyed
+	 */
+	public long getBigAsteroidsDestroyed() {
+		
+		return bigAsteroidsDestroyed;
+	}
+	
+	/**
+	 * Returns the number of asteroid destroyed. 
+	 * @return the number of asteroid destroyed
+	 */
 
 	public synchronized void setAsteroidsDestroyed(long asteroidsDestroyed) {
 		this.asteroidsDestroyed = asteroidsDestroyed;
+	}
+	
+	/**
+	 * Returns the number of asteroid destroyed. 
+	 * @return the number of asteroid destroyed
+	 */
+
+	public synchronized void setAsteroids2Destroyed(long asteroids2Destroyed) {
+		this.asteroids2Destroyed = asteroids2Destroyed;
 	}
 	
 	/**
@@ -187,6 +216,8 @@ public class GameStatus {
 	public void setLevel(int level) {
 		this.level = level;
 	}
+
+	
 	
 	/**
 	 * Returns the current game level.

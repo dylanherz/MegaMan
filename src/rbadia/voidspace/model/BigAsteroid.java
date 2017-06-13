@@ -74,5 +74,4 @@ public class BigAsteroid extends Rectangle {
 	public void setDamage(int damage) {
 		this.damage = damage;
 	}
-
 }

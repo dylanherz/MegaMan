@@ -54,6 +54,13 @@ public class GameLogic {
 	private Floor[] floor;
 
 	private long lastBulletTime;
+	
+	protected int xPos;
+	protected int yPos;
+	protected double platformDirection;
+	protected double platformSpeed;
+	protected int deltaX;
+	protected int deltaY;
 
 	/**
 	 * Create a new game logic handler
@@ -116,7 +123,7 @@ public class GameLogic {
 		newMegaMan(gameScreen);
 		newFloor(gameScreen, 9);
 
-		newNumPlatforms(gameScreen, 8);
+		newNumPlatforms(gameScreen, 10);
 
 		//        newPlatform(gameScreen/*, 1*/);
 		//        newPlatform1(gameScreen);
@@ -151,11 +158,11 @@ public class GameLogic {
 			}
 		}
 		if(!status.isGameWon()){
-			if(gameScreen.getBoom() == 2 || gameScreen.getBoom() == 8)
+			if(gameScreen.getBoom() == 2 || gameScreen.getBoom() == 8 || gameScreen.getBoom() == 18) {
 				gameWon();
+			}
 		}
 	}
-
 	/**
 	 * Actions to take when the game is over.
 	 */
@@ -329,6 +336,43 @@ public class GameLogic {
 		}
 		return numPlatforms;
 
+	}
+	
+	public double getxPos() {
+		return xPos;
+	}
+
+	public void setxPos(int xPos) {
+		this.xPos = xPos;
+	}
+
+	public double getyPos() {
+		return yPos;
+	}
+
+	public void setyPos(int yPos) {
+		this.yPos = yPos;
+	}
+
+	public double getPlatformDirection() {
+		return platformDirection;
+	}
+
+	public void setPlatformDirection(double platformDirection) {
+		this.platformDirection = platformDirection;
+	}
+
+	public double getPlatformSpeed() {
+		return platformSpeed;
+	}
+
+	public void setPlatformSpeed(double platformSpeed) {
+		this.platformSpeed = platformSpeed;
+	}
+	
+	public void move(int deltaX, int deltaY){
+		this.xPos = this.xPos + deltaX;
+		this.yPos = this.yPos + deltaY;
 	}
 
 

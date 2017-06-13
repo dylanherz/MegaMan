@@ -55,6 +55,21 @@ public class SoundManager {
     		}).start();	
     	}
     }
+    
+    /**
+     * Plays sound for asteroid2 explosions.
+     */
+    public void playAsteroid2ExplosionSound(){
+		// play sound for asteroid explosions
+    	if(SOUND_ON){
+    		new Thread(new Runnable(){
+    			public void run() {
+    				shipExplosionSound.play();
+    			}
+    		}).start();	
+    	}
+    }
+    
     public void playBigAsteroidExplosionSound(){
 		// play sound for asteroid explosions
     	if(SOUND_ON){

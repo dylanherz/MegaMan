@@ -116,6 +116,12 @@ public class InputHandler implements KeyListener {
 						
 						case 3:
 							gameScreen.setBoom(8);
+							gameScreen.Level3Restructure();
+							
+						break;
+						
+						case 4:
+							gameScreen.setBoom(18);
 							gameScreen.restructure();
 							
 						break;
