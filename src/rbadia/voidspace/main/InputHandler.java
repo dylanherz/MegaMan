@@ -262,7 +262,6 @@ public class InputHandler implements KeyListener {
 
 				//WIP
 				//				if(mute==0){
-
 				//Music
 				//changes music from "menu music" to "ingame music"
 				VoidSpaceMain.audioClip.close();
@@ -279,8 +278,9 @@ public class InputHandler implements KeyListener {
 				} catch (LineUnavailableException e1) {
 					e1.printStackTrace();
 				}
-				//				}
+				//
 			}
+					
 			else{
 				this.spaceIsPressed = true;
 
@@ -338,7 +338,7 @@ public class InputHandler implements KeyListener {
 			break;
 			
 		case KeyEvent.VK_N:
-			if(!status.isGameStarted() && !status.isGameOver() && !status.isGameStarting() && !status.isGameWon()){		
+			if(!status.isGameStarted() && !status.isGameOver() && !status.isGameStarting() && !status.isGameWon()){
 			}
 			else{
 				this.nIsPressed= true;

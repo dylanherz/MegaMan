@@ -26,8 +26,8 @@ public abstract class BaseScreen extends JPanel {
 
 	protected long lastShipTime;
 	protected long lastAsteroidTime;
-		protected long lastAsteroid2Time;
-		protected long lastBigAsteroidTime;
+	protected long lastAsteroid2Time;
+	protected long lastBigAsteroidTime;
 
 	protected Rectangle asteroidExplosion;
 	protected Rectangle bigAsteroidExplosion;

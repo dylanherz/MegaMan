@@ -15,6 +15,7 @@ public class Asteroid extends Rectangle {
 	private int asteroid2Width = 32;
 	private int asteroid2Height = 32;
 	private int speed = DEFAULT_SPEED;
+	private int randomSpeed;
 
 	private Random rand = new Random();
 	
@@ -79,4 +80,27 @@ public class Asteroid extends Rectangle {
 	public int getDefaultSpeed(){
 		return DEFAULT_SPEED;
 	}
+	/**
+	 * Returns the default asteroid speed.
+	 * @return the default asteroid speed
+	 */
+	public int getRandomSpeed(){
+		randomSpeed = rand.nextInt(10);
+		return randomSpeed;
+	}
+	
+	public void setRandomSpeed(int speed){
+		this.speed = speed;
+	}
+	
+	public int getRandomSpeed2(){
+		randomSpeed = rand.nextInt(15);
+		return randomSpeed;
+	}
+	
+	public void setRandomSpeed2(int randomSpeed){
+		this.randomSpeed = speed;
+	}
+	
+	
 }
