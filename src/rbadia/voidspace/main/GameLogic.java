@@ -49,6 +49,8 @@ public class GameLogic {
 	private List<BulletBoss> bulletsBoss;
 	private List<BulletBoss2> bulletsBoss2;
 	private List<BigBullet> bigBullets;
+	private int bossHealth = 15;
+	private int bossDamage = 0;
 
 	private Platform[] numPlatforms;
 	private Floor[] floor;
@@ -66,7 +68,7 @@ public class GameLogic {
 	 * Create a new game logic handler
 	 * @param gameScreen the game screen
 	 */
-	public GameLogic(GameScreen gameScreen){
+	public GameLogic(GameScreen gameScreen) {
 		this.gameScreen = gameScreen;
 
 		// initialize game status information
@@ -455,6 +457,22 @@ public class GameLogic {
 	public BigAsteroid getBigAsteroid() {
 		return bigAsteroid;
 	}
+	public int getBossHealth() {
+		return bossHealth;
+	}
+
+	public void setBossHealth(int bossHealth) {
+		this.bossHealth = bossHealth;
+	}
+
+	public int getBossDamage() {
+		return bossDamage;
+	}
+
+	public void setBossDamage(int bossDamage) {
+		this.bossDamage = bossDamage;
+	}
+	
 
 	/**
 	 * Returns the list of bullets.

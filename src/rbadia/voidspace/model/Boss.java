@@ -12,20 +12,22 @@ public class Boss extends Rectangle {
 	private static final long serialVersionUID = 1L;
 	
 	public static final int DEFAULT_SPEED3 = 4;
-	private static final int Y_OFFSET = 325; // initial y distance of the ship from the bottom of the screen 
+	private static final int Y_OFFSET = 310; // initial y distance of the ship from the bottom of the screen 
 	
 	private int bossWidth = 75;
 	private int bossHeight = 83;
 	private int bossWidth2 = 110;
 	private int bossHeight2 = 100;
 	private int speed3 = DEFAULT_SPEED3;
+	private int bossHealth = 15;
+	private int bossDamage = 0;
 	
 	/**
 	 * Creates a new ship at the default initial location. 
 	 * @param screen the game screen
 	 */
 	public Boss(GameScreen screen){
-		this.setLocation((screen.getWidth() - bossWidth)/2,
+		this.setLocation((screen.getWidth() - bossWidth),
 				screen.getHeight() - bossHeight - Y_OFFSET);
 		this.setSize(bossWidth, bossHeight);
 	}
@@ -85,5 +87,22 @@ public class Boss extends Rectangle {
 	public int getDefaultSpeed(){
 		return DEFAULT_SPEED3;
 	}
+
+	public int getBossHealth() {
+		return bossHealth;
+	}
+
+	public void setBossHealth(int bossHealth) {
+		this.bossHealth = bossHealth;
+	}
+
+	public int getBossDamage() {
+		return bossDamage;
+	}
+
+	public void setBossDamage(int bossDamage) {
+		this.bossDamage = bossDamage;
+	}
+	
 	
 }

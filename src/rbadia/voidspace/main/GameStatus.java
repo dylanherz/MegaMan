@@ -20,7 +20,8 @@ public class GameStatus {
 	private boolean newPlatform;
 	private long asteroidsDestroyed = 0;
 	private long asteroids2Destroyed = 0;
-	private long bigAsteroidsDestroyed = 0;
+	private long bigAsteroidDestroyed = 0;
+	private long bossDestroyed = 0;
 	private int shipsLeft;
 	private int level = 1;
 	
@@ -174,9 +175,17 @@ public class GameStatus {
 	 * Returns the number of asteroid destroyed. 
 	 * @return the number of asteroid destroyed
 	 */
-	public long getBigAsteroidsDestroyed() {
+	public synchronized long getBigAsteroidDestroyed() {
 		
-		return bigAsteroidsDestroyed;
+		return bigAsteroidDestroyed;
+	}
+	/**
+	 * Returns the number of asteroid destroyed. 
+	 * @return the number of asteroid destroyed
+	 */
+	public synchronized void setBigAsteroidDestroyed(long bigAsteroidDestroyed) {
+		
+		this.bigAsteroidDestroyed = bigAsteroidDestroyed;
 	}
 	
 	/**
@@ -216,7 +225,23 @@ public class GameStatus {
 	public void setLevel(int level) {
 		this.level = level;
 	}
+	/**
+	 * Returns the number of asteroid destroyed. 
+	 * @return the number of asteroid destroyed
+	 */
 
+	public synchronized long getBossDestroyed() {
+		return bossDestroyed;
+	}
+	/**
+	 * Returns the number of asteroid destroyed. 
+	 * @return the number of asteroid destroyed
+	 */
+
+	public synchronized void setBossDestroyed(long bossDestroyed) {
+		this.bossDestroyed = bossDestroyed;
+	}
+	
 	
 	
 	/**
