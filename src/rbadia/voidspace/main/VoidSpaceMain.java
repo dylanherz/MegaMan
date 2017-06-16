@@ -21,7 +21,7 @@ public class VoidSpaceMain {
 	
 	public static AudioInputStream audioStream;
 	public static Clip audioClip;
-	public static File audioFile;	
+	public static File audioFile;
 
 	/**
 	 * @param args
@@ -44,11 +44,13 @@ public class VoidSpaceMain {
 			audioClip = (Clip) AudioSystem.getLine(info);
 			audioClip.open(audioStream);
 			audioClip.start();
-			audioClip.loop(Clip.LOOP_CONTINUOUSLY);
+			//audioClip.loop(Clip.LOOP_CONTINUOUSLY);
 		} catch (LineUnavailableException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		
 		
 		// init main frame
 		MainFrame frame = new MainFrame();
@@ -72,6 +74,11 @@ public class VoidSpaceMain {
 		
 		// init main game loop
 		new Thread(new GameLoop(gameScreen, gameLogic, inputHandler)).start();
+	}
+
+	private static void mainGameSong() {
+		// TODO Auto-generated method stub
+		
 	}
 
 
