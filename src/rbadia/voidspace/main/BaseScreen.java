@@ -34,7 +34,7 @@ public abstract class BaseScreen extends JPanel {
 	//	protected Rectangle shipExplosion;
 	//	protected Rectangle bossExplosion;
 
-	protected JLabel shipsValueLabel;
+	protected JLabel LivesValueLabel;
 	protected JLabel destroyedValueLabel;
 	protected JLabel levelValueLabel;
 
@@ -81,7 +81,7 @@ public abstract class BaseScreen extends JPanel {
 	
 	protected abstract void setDestroyedValueLabel(JLabel destroyedValueLabel);
 	
-	protected abstract void setShipsValueLabel(JLabel shipsValueLabel);
+	protected abstract void setLivesValueLabel(JLabel LivesValueLabel);
 	
 	protected abstract void setLevelValueLabel(JLabel levelValueLabel);
 	

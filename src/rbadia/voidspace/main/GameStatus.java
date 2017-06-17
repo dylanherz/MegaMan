@@ -22,7 +22,7 @@ public class GameStatus {
 	private long asteroids2Destroyed = 0;
 	private long bigAsteroidDestroyed = 0;
 	private long bossDestroyed = 0;
-	private int shipsLeft;
+	private int LivesLeft;
 	private int level = 1;
 	
 	public GameStatus(){
@@ -207,15 +207,15 @@ public class GameStatus {
 	}
 	
 	/**
-	 * Returns the number ships/lives left.
-	 * @return the number ships left
+	 * Returns the number Lives/lives left.
+	 * @return the number Lives left
 	 */
-	public synchronized int getShipsLeft() {
-		return shipsLeft;
+	public synchronized int getLivesLeft() {
+		return LivesLeft;
 	}
 
-	public synchronized void setShipsLeft(int shipsLeft) {
-		this.shipsLeft = shipsLeft;
+	public synchronized void setLivesLeft(int LivesLeft) {
+		this.LivesLeft = LivesLeft;
 	}
 
 	public int getLevel() {

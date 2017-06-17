@@ -26,8 +26,8 @@ public class MainFrame extends JFrame {
 	private JLabel levelLabel;
 	private JLabel levelValueLabel;
 
-	private JLabel shipsLabel;
-	private JLabel shipsValueLabel;
+	private JLabel LivesLabel;
+	private JLabel LivesValueLabel;
 	
 	/**
 	 * This is the default constructor
@@ -45,7 +45,7 @@ public class MainFrame extends JFrame {
 	private void initialize() {
 		this.setSize(530, 480);
 		this.setContentPane(getJContentPane());
-		this.setTitle("Void Space");
+		this.setTitle("Definitely Not MegaMan");
 //		this.setResizable(false);
 		
 		Dimension dim = this.getToolkit().getScreenSize();
@@ -110,8 +110,8 @@ public class MainFrame extends JFrame {
 			gridBagConstraints.gridy = 0;
 			gridBagConstraints.fill = GridBagConstraints.NONE;
 			gridBagConstraints.gridwidth = 6;	
-			shipsLabel = new JLabel("Ships Left: ");
-			shipsValueLabel = new JLabel("3");
+			LivesLabel = new JLabel("Lives Left: ");
+			LivesValueLabel = new JLabel("5");
 			destroyedLabel = new JLabel("Score: ");
 			destroyedValueLabel = new JLabel("0");
 			levelLabel = new JLabel("Level: ");
@@ -119,8 +119,8 @@ public class MainFrame extends JFrame {
 			jContentPane = new JPanel();
 			jContentPane.setLayout(new GridBagLayout());
 			jContentPane.add(getGameScreen(), gridBagConstraints);
-			jContentPane.add(shipsLabel, gridBagConstraints1);
-			jContentPane.add(shipsValueLabel, gridBagConstraints2);
+			jContentPane.add(LivesLabel, gridBagConstraints1);
+			jContentPane.add(LivesValueLabel, gridBagConstraints2);
 			jContentPane.add(destroyedLabel, gridBagConstraints3);
 			jContentPane.add(destroyedValueLabel, gridBagConstraints4);
 			jContentPane.add(levelLabel, gridBagConstraints5);
@@ -137,7 +137,7 @@ public class MainFrame extends JFrame {
 	public GameScreen getGameScreen() {
 		if (gameScreen == null) {
 			gameScreen = new GameScreen();
-			gameScreen.setShipsValueLabel(shipsValueLabel);
+			gameScreen.setLivesValueLabel(LivesValueLabel);
 			gameScreen.setDestroyedValueLabel(destroyedValueLabel);
 			gameScreen.setLevelValueLabel(levelValueLabel);
 		}

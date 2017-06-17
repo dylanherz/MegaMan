@@ -7,12 +7,15 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Random;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import rbadia.voidspace.graphics.GraphicsManager;
 import rbadia.voidspace.model.Asteroid;
@@ -55,7 +58,7 @@ public class GameScreen extends BaseScreen{
 	//	private Rectangle shipExplosion;
 	private Rectangle bossExplosion;
 
-	private JLabel shipsValueLabel;
+	private JLabel LivesValueLabel;
 	private JLabel destroyedValueLabel;
 	private JLabel levelValueLabel;
 
@@ -130,7 +133,6 @@ public class GameScreen extends BaseScreen{
 		Asteroid asteroid2 = gameLogic.getAsteroid2();
 		BigAsteroid bigAsteroid = gameLogic.getBigAsteroid();
 		List<BulletBoss> bulletsBoss = gameLogic.getBulletBoss();
-//		BulletBoss bulletBoss = gameLogic.getBulletBoss1();
 		//		List<BulletBoss2> bulletsBoss2 = gameLogic.getBulletBoss2();		
 		Boss boss = gameLogic.getBoss();
 		//		Boss boss2 = gameLogic.getBoss2();
@@ -147,20 +149,25 @@ public class GameScreen extends BaseScreen{
 
 		// draw 50 random stars && background pictures in each level
 		if(status.getLevel() == 1){
-			g2d.drawImage(graphicsMan.getMegaManIntroImg(), null, 0, 0);
+			g2d.drawImage(graphicsMan.getMegaMan1Img(), null, 0, 0);
 			drawStars(50);
 		}
 		if(status.getLevel() == 2){
-			g2d.drawImage(graphicsMan.getMegaManIntro2Img(), null, 60, 30);
+			g2d.drawImage(graphicsMan.getMegaMan2Img(), null, 0, 0);
 			drawStars(50);
 		}
 		if(status.getLevel() == 3){
-			g2d.drawImage(graphicsMan.getMegaManIntro4Img(), null, -70, 95);
+			g2d.drawImage(graphicsMan.getMegaMan3Img(), null, 0, 0);
 			drawStars(50);
 		}
 		if(status.getLevel() == 4){
-			g2d.drawImage(graphicsMan.getBlackScreenImg(), null, 0, 0);
-			g2d.drawImage(graphicsMan.getBoss1Img(), null, 200, 40);
+			g2d.drawImage(graphicsMan.getMegaMan4Img(), null, 0, 0);
+			drawStars(50);
+		}
+		if(status.getLevel() == 5) {
+			victory();
+//			status.setGameStarted(true);
+//			gameLogic.gameOver();
 			drawStars(50);
 		}
 		// if the game is starting, draw "Get Ready" message
@@ -213,6 +220,9 @@ public class GameScreen extends BaseScreen{
 			return;
 		}
 
+		if(status.isGameWon()){
+			
+		}
 		// the game has not started yet
 		if(!status.isGameStarted()){
 			// draw game title screen
@@ -259,13 +269,19 @@ public class GameScreen extends BaseScreen{
 		if(status.getLevel() == 4){
 			Boss(boss);
 		}
+		if(status.getLevel() == 5 || boom == 26){
+			victory();
+//			status.setGameStarted(true);
+//			gameLogic.gameOver();
+			
+		}
 		
 		// draw bullets   
 		for(int i=0; i<bullets.size(); i++){
 			Bullet bullet = bullets.get(i);
 			graphicsMan.drawBullet(bullet, g2d, this);
 
-			boolean remove =   gameLogic.moveBullet(bullet);
+			boolean remove = gameLogic.moveBullet(bullet);
 			if(remove){
 				bullets.remove(i);
 				i--;
@@ -433,23 +449,23 @@ public class GameScreen extends BaseScreen{
 
 		//MM-Asteroid collision
 		if(asteroid.intersects(megaMan)){
-			status.setShipsLeft(status.getShipsLeft() - 1);
+			status.setLivesLeft(status.getLivesLeft() - 1);
 			removeAsteroid(asteroid);
 		}
 		if(asteroid2.intersects(megaMan)){
-			status.setShipsLeft(status.getShipsLeft() - 1);
+			status.setLivesLeft(status.getLivesLeft() - 1);
 			removeAsteroid2(asteroid2);
 		}
 		if(bigAsteroid.intersects(megaMan)){
-			status.setShipsLeft(status.getShipsLeft() - 1);
+			status.setLivesLeft(status.getLivesLeft() - 1);
 			removeBigAsteroid(bigAsteroid);
 		}
 		if(boss.intersects(megaMan)){
-			status.setShipsLeft(status.getShipsLeft() - 1);
+			status.setLivesLeft(status.getLivesLeft() - 1);
 		}
 		for(int i = 0; i < bulletsBoss.size(); i ++){
 		if(bulletsBoss.get(i).intersects(megaMan)){
-			status.setShipsLeft(status.getShipsLeft() - 1);
+			status.setLivesLeft(status.getLivesLeft() - 1);
 			bulletsBoss.remove(i);
 			}
 		}
@@ -490,15 +506,20 @@ public class GameScreen extends BaseScreen{
 			boom = boom++;
 		}
 		
+		if(boom == 26){
+			restructure();
+			status.setLevel(status.getLevel() + 1);
+		}
+		
 		status.getAsteroidsDestroyed();
-		status.getShipsLeft();
+		status.getLivesLeft();
 		status.getLevel();
 
 		// update asteroids destroyed label  
 		destroyedValueLabel.setText(Long.toString(status.getAsteroidsDestroyed()));
 		
-		// update ships left label
-		shipsValueLabel.setText(Integer.toString(status.getShipsLeft()));
+		// update Lives left label
+		LivesValueLabel.setText(Integer.toString(status.getLivesLeft()));
 
 		//update level label
 		levelValueLabel.setText(Long.toString(status.getLevel()));
@@ -543,8 +564,19 @@ public class GameScreen extends BaseScreen{
 
 			//LEVEL 1
 			if((asteroid.getX() + asteroid.getAsteroidWidth() >  0 && (boom<=8))){
-				asteroid.translate(-asteroid.getSpeed(), 0);
+				int asteroidPos = 0;
+				if(this.getWidth() > 200){
+				asteroid.setSpeed(asteroid.getSpeed() + asteroidPos );
+				asteroid.translate(-asteroid.getSpeed(), rand.nextInt(asteroid.getSpeed()));
+				asteroidPos++;
 				graphicsMan.drawAsteroid(asteroid, g2d, this);	
+				}
+				else if(this.getWidth() > 200){
+					asteroid.setSpeed(asteroid.getSpeed() - asteroidPos );
+					asteroid.translate(-asteroid.getSpeed(), rand.nextInt(asteroid.getSpeed()));
+					asteroidPos--;
+					graphicsMan.drawAsteroid(asteroid, g2d, this);	
+					}
 			}
 			else if (boom <= 8){
 				asteroid.setLocation(this.getWidth() - asteroid.getAsteroidWidth(),
@@ -685,7 +717,7 @@ public class GameScreen extends BaseScreen{
 				boss.translate(0, (boss.getSpeed3()));
 				graphicsMan.drawBoss(boss, g2d, this);
 			}
-			else if(boom <= 30) {
+			else if(boom <= 26) {
 				boss.setLocation(this.getWidth() - boss.getBossWidth(), 
 						rand.nextInt(this.getHeight() - boss.getBossHeight() -83));
 				}
@@ -704,7 +736,7 @@ public class GameScreen extends BaseScreen{
 				lastBossTime = currentTime;
 				status.setNewBoss(false);
 				boss.setLocation(this.getWidth() - boss.getBossWidth(),
-						rand.nextInt(this.getHeight() - boss.getBossHeight() - 83));
+				rand.nextInt(this.getHeight() - boss.getBossHeight() - 83));
 			}
 		else{
 				// draw explosion
@@ -720,8 +752,8 @@ public class GameScreen extends BaseScreen{
 		String gameOverStr = "GAME OVER";
 
 		Font currentFont = biggestFont == null? bigFont : biggestFont;
-		float fontSize = currentFont.getSize2D();
-		bigFont = currentFont.deriveFont(fontSize + 1).deriveFont(Font.BOLD);
+		float fontSize = currentFont.getSize2D() - 20;
+		bigFont = currentFont.deriveFont(fontSize + 10).deriveFont(Font.BOLD);
 		FontMetrics fm = g2d.getFontMetrics(bigFont);
 		int strWidth = fm.stringWidth(gameOverStr);
 		if(strWidth > this.getWidth() - 10){
@@ -748,7 +780,7 @@ public class GameScreen extends BaseScreen{
 	protected void drawYouWin() {
 		if(status.getLevel() == 2){
 		String youWinStr = "Level 2";
-
+		g2d.drawImage(graphicsMan.getMegaMan2Img(), null, 0, 0);
 		Font currentFont = biggestFont == null? bigFont : biggestFont;
 		float fontSize = currentFont.getSize2D();
 		bigFont = currentFont.deriveFont(fontSize + 1).deriveFont(Font.BOLD);
@@ -772,7 +804,7 @@ public class GameScreen extends BaseScreen{
 		String newGameStr = "Next level starting soon";
 		strWidth = fm.stringWidth(newGameStr);
 		strX = (this.getWidth() - strWidth)/2;
-		strY = (this.getHeight() + fm.getAscent())/2 + ascent + 16;
+		strY = (this.getHeight() + fm.getAscent())/2 + ascent + 40;
 		g2d.setPaint(Color.CYAN);
 		g2d.drawString(newGameStr, strX, strY);
 
@@ -786,10 +818,13 @@ public class GameScreen extends BaseScreen{
 		if(boom == 24){
 			boom = 25;
 		}
+		if (boom == 26){
+			boom = 27;
+		}
 	}
 		if(status.getLevel() == 3){
 			String youWinStr = "Level 3";
-
+			g2d.drawImage(graphicsMan.getMegaMan3Img(), null, 0, 0);
 			Font currentFont = biggestFont == null? bigFont : biggestFont;
 			float fontSize = currentFont.getSize2D();
 			bigFont = currentFont.deriveFont(fontSize + 1).deriveFont(Font.BOLD);
@@ -813,7 +848,7 @@ public class GameScreen extends BaseScreen{
 			String newGameStr = "Next level starting soon";
 			strWidth = fm.stringWidth(newGameStr);
 			strX = (this.getWidth() - strWidth)/2;
-			strY = (this.getHeight() + fm.getAscent())/2 + ascent + 16;
+			strY = (this.getHeight() + fm.getAscent())/2 + ascent + 40;
 			g2d.setPaint(Color.CYAN);
 			g2d.drawString(newGameStr, strX, strY);
 
@@ -826,14 +861,18 @@ public class GameScreen extends BaseScreen{
 			}
 			if(boom == 24){
 				boom = 25;
+			}
+			
+			if (boom == 26){
+				boom = 27;
 			}
 		}
 		if(status.getLevel() == 4){
 			String youWinStr = "Boss Challenge";
-
+			g2d.drawImage(graphicsMan.getMegaMan4Img(), null, 0, 0);
 			Font currentFont = biggestFont == null? bigFont : biggestFont;
-			float fontSize = currentFont.getSize2D();
-			bigFont = currentFont.deriveFont(fontSize + 1).deriveFont(Font.BOLD);
+			float fontSize = currentFont.getSize2D() - 90;
+			bigFont = currentFont.deriveFont(fontSize).deriveFont(Font.BOLD);
 			FontMetrics fm = g2d.getFontMetrics(bigFont);
 			int strWidth = fm.stringWidth(youWinStr);
 			if(strWidth > this.getWidth() - 10){
@@ -854,7 +893,7 @@ public class GameScreen extends BaseScreen{
 			String newGameStr = "Next level starting soon";
 			strWidth = fm.stringWidth(newGameStr);
 			strX = (this.getWidth() - strWidth)/2;
-			strY = (this.getHeight() + fm.getAscent())/2 + ascent + 16;
+			strY = (this.getHeight() + fm.getAscent())/2 + ascent + 40;
 			g2d.setPaint(Color.CYAN);
 			g2d.drawString(newGameStr, strX, strY);
 
@@ -867,6 +906,9 @@ public class GameScreen extends BaseScreen{
 			}
 			if(boom == 24){
 				boom = 25;
+			}
+			if (boom == 26){
+				boom = 27;
 			}
 		}
 	}
@@ -875,14 +917,14 @@ public class GameScreen extends BaseScreen{
 	 * Draws the initial "Get Ready!" message.
 	 */
 	protected void drawGetReady() {
-		String readyStr = "Get Ready"; 
-		g2d.setFont(originalFont.deriveFont(originalFont.getSize2D() + 1));
+		String readyStr = "Get Ready!"; 
+		g2d.setFont(originalFont.deriveFont(originalFont.getSize2D() + 40));
 		FontMetrics fm = g2d.getFontMetrics();
 		int ascent = fm.getAscent();
 		int strWidth = fm.stringWidth(readyStr);
 		int strX = (this.getWidth() - strWidth)/2;
-		int strY = (this.getHeight() + ascent)/2;
-		g2d.setPaint(Color.WHITE);
+		int strY = (this.getHeight() + ascent - 300)/2;
+		g2d.setPaint(Color.YELLOW);
 		g2d.drawString(readyStr, strX, strY);
 	}
 
@@ -903,15 +945,14 @@ public class GameScreen extends BaseScreen{
 	 * Display initial game title screen.
 	 */
 	protected void initialMessage() {
-		String gameTitleStr = "Definitely Not MegaMan";
-		g2d.drawImage(graphicsMan.getBlackScreenImg(), null, 0, 0);
-		g2d.drawImage(graphicsMan.getMegaManIntro3Img(), null, 8, -85);
+		String gameTitleStr = "Definitely Not";
+		g2d.drawImage(graphicsMan.getMegaManMenuImg(), null, 0, -70);
 		Font currentFont = biggestFont == null? bigFont : biggestFont;
 		float fontSize = currentFont.getSize2D();
-		bigFont = currentFont.deriveFont(fontSize + 1).deriveFont(Font.BOLD).deriveFont(Font.ITALIC);
+		bigFont = currentFont.deriveFont(fontSize + 1).deriveFont(Font.BOLD);
 		FontMetrics fm = g2d.getFontMetrics(bigFont);
 		int strWidth = fm.stringWidth(gameTitleStr);
-		if(strWidth > this.getWidth() - 10){
+		if(strWidth > this.getWidth() - 100){
 			bigFont = currentFont;
 			biggestFont = currentFont;
 			fm = g2d.getFontMetrics(currentFont);
@@ -920,7 +961,7 @@ public class GameScreen extends BaseScreen{
 		g2d.setFont(bigFont);
 		int ascent = fm.getAscent();
 		int strX = (this.getWidth() - strWidth)/2;
-		int strY = (this.getHeight() + ascent)/2 - ascent;
+		int strY = (this.getHeight() + ascent)/2 - 137;
 		g2d.setPaint(Color.YELLOW);
 		g2d.drawString(gameTitleStr, strX, strY);
 
@@ -929,29 +970,29 @@ public class GameScreen extends BaseScreen{
 		String newGameStr = "Press <Space> to Start a New Game.";
 		strWidth = fm.stringWidth(newGameStr);
 		strX = (this.getWidth() - strWidth)/2;
-		strY = (this.getHeight() + fm.getAscent())/2 + ascent + 16;
-		g2d.setPaint(Color.WHITE);
+		strY = (this.getHeight() + fm.getAscent())/2 + ascent + 30;
+		g2d.setPaint(Color.ORANGE);
 		g2d.drawString(newGameStr, strX, strY);
 
 		fm = g2d.getFontMetrics();
 		String itemGameStr = "Press <I> for Item Menu.";
 		strWidth = fm.stringWidth(itemGameStr);
 		strX = (this.getWidth() - strWidth)/2;
-		strY = strY + 16;
+		strY = strY + 20;
 		g2d.drawString(itemGameStr, strX, strY);
 
 		fm = g2d.getFontMetrics();
 		String shopGameStr = "Press <S> for Shop Menu.";
 		strWidth = fm.stringWidth(shopGameStr);
 		strX = (this.getWidth() - strWidth)/2;
-		strY = strY + 16;
+		strY = strY + 20;
 		g2d.drawString(shopGameStr, strX, strY);
 
 		fm = g2d.getFontMetrics();
 		String exitGameStr = "Press <Esc> to Exit the Game.";
 		strWidth = fm.stringWidth(exitGameStr);
 		strX = (this.getWidth() - strWidth)/2;
-		strY = strY + 16;
+		strY = strY + 20;
 		g2d.drawString(exitGameStr, strX, strY);
 	}
 
@@ -959,7 +1000,7 @@ public class GameScreen extends BaseScreen{
 	 * Prepare screen for game over.
 	 */
 	public void doGameOver(){
-		shipsValueLabel.setForeground(new Color(128, 0, 0));
+		LivesValueLabel.setForeground(new Color(128, 0, 0));
 	}
 
 	/**
@@ -975,8 +1016,8 @@ public class GameScreen extends BaseScreen{
 		biggestFont = null;
 
 		// set labels' text
-		shipsValueLabel.setForeground(Color.BLACK);
-		shipsValueLabel.setText(Integer.toString(status.getShipsLeft()));
+		LivesValueLabel.setForeground(Color.BLACK);
+		LivesValueLabel.setText(Integer.toString(status.getLivesLeft()));
 		destroyedValueLabel.setText(Long.toString(status.getAsteroidsDestroyed()));
 		levelValueLabel.setText(Long.toString(status.getLevel()));
 	}
@@ -1012,10 +1053,10 @@ public class GameScreen extends BaseScreen{
 
 	/**
 	 * Sets the label that displays the value for ship (lives) left
-	 * @param shipsValueLabel the label to set
+	 * @param LivesValueLabel the label to set
 	 */
-	public void setShipsValueLabel(JLabel shipsValueLabel) {
-		this.shipsValueLabel = shipsValueLabel;
+	public void setLivesValueLabel(JLabel LivesValueLabel) {
+		this.LivesValueLabel = LivesValueLabel;
 	}
 
 	public void setLevelValueLabel(JLabel levelValueLabel){
@@ -1122,35 +1163,37 @@ public class GameScreen extends BaseScreen{
 	public void restructure(){
 		Platform[] platform = gameLogic.getNumPlatforms();
 		for(int i=0; i<8; i++){
+			if(status.getLevel() == 2 || boom == 5 && boom <= 12){
 			if(i<4)	platform[i].setLocation(50+ i*50, getHeight()/2 + 140 - i*40);
 			if(i==4) platform[i].setLocation(50 +i*50, getHeight()/2 + 140 - 3*40);
 			if(i>4){	
 				int n=4;
 				platform[i].setLocation(50 + i*50, getHeight()/2 + 20 + (i-n)*40 );
 				n=n+2;
-				
+			
 			System.out.println("Testing = " + n);
+				}
 			}
 		}
-		System.out.println("BEFORE " + status.getLevel());
+		System.out.println("BEFORE " + (status.getLevel() - 1));
 		
 		System.out.println("AFTER " + status.getLevel());
 		
 		//LEVEL 3
 		 for(int i=0; i<8; i++){
-		 	if(status.getLevel() == 3 || boom == 8 &&  boom <= 18){
+		 	if(status.getLevel() == 3 || boom == 12 &&  boom <= 24){
 		 		if(i== 0 || i==7) platform[i].setLocation(122 + i*30, getHeight()/2 -50);
 		 		if(i== 1 || i== 6)	platform[i].setLocation(50 + i*50, getHeight()/2 + 120);
 				if(i== 3 || i== 4) platform[i].setLocation(15 + i*60, getHeight()/2 + 10);
 		 		}
-		 			System.out.println("BEFORE " + status.getLevel());
+		 			System.out.println("BEFORE " + (status.getLevel() -1));
 		 			
 		 			System.out.println("AFTER " + status.getLevel());
 		 		}
 		 			
 		 //LEVEL 4
 		 for(int i=0; i<8; i++){
-			 if(status.getLevel() == 4 || boom >= 18) {
+			 if(status.getLevel() == 4 || boom == 25) {
 				 if(i== 0 || i==7) platform[i].setLocation(122 + i*30, getHeight()/2 + 130);
 				 if(i== 1 || i== 6)	platform[i].setLocation(50 + i*50, getHeight()/2 - 20);
 				 if(i== 3 || i== 4) platform[i].setLocation(15 + i*60, getHeight()/2 - 80);
@@ -1158,6 +1201,16 @@ public class GameScreen extends BaseScreen{
 		 			System.out.println("BEFORE " + status.getLevel());
 		 			
 		 			System.out.println("AFTER " + status.getLevel());
+		}
+		 // LEVEL 5
+			 if(status.getLevel() == 5 || boom == 26) {
+				
+				 victory();
+//				 gameLogic.gameOver();
+		 			
+				 System.out.println("BEFORE " + (status.getLevel() - 1));
+		 			
+				 System.out.println("AFTER " + status.getLevel());
 		}
 	}
 	/* 
@@ -1226,9 +1279,72 @@ public class GameScreen extends BaseScreen{
 		boss.setLocation(-boss.width, -boss.height);
 		status.setNewBoss(true);
 		lastBossTime = System.currentTimeMillis();
-
+		gameLogic.gameOver();
 		// play asteroid explosion sound
 		soundMan.playBigAsteroidExplosionSound();
+	}
+	
+	public void victory(){
+		if(status.getLevel() == 5 || boom == 26) {
+		String gameTitleStr = "VICTORY";
+		g2d.drawImage(graphicsMan.getVictoryImg(), null, 0, 0);
+		Font currentFont = biggestFont == null? bigFont : biggestFont;
+		float fontSize = currentFont.getSize2D() - 60;
+		bigFont = currentFont.deriveFont(fontSize + 1);
+		FontMetrics fm = g2d.getFontMetrics(bigFont);
+		int strWidth = fm.stringWidth(gameTitleStr);
+		if(strWidth > this.getWidth() - 10){
+			bigFont = currentFont;
+			biggestFont = currentFont;
+			fm = g2d.getFontMetrics(currentFont);
+			strWidth = fm.stringWidth(gameTitleStr);
+		}
+		g2d.setFont(bigFont);
+		int ascent = fm.getAscent();
+		int strX = (this.getWidth() - strWidth)/2;
+		int strY = (this.getHeight() + ascent)/2 - 137;
+		g2d.setPaint(Color.YELLOW);
+		g2d.drawString(gameTitleStr, strX, strY);
+
+		g2d.setFont(originalFont);
+		fm = g2d.getFontMetrics();
+		String newGameStr = "Origninal Game Design by: J. Agosto";
+		strWidth = fm.stringWidth(newGameStr);
+		strX = (this.getWidth() - strWidth)/2;
+		strY = (this.getHeight() + fm.getAscent())/2 + ascent;
+		g2d.setPaint(Color.ORANGE);
+		g2d.drawString(newGameStr, strX, strY);
+
+		fm = g2d.getFontMetrics();
+		String itemGameStr = "Edited for Project Purposes: JDCreations ";
+		strWidth = fm.stringWidth(itemGameStr);
+		strX = (this.getWidth() - strWidth)/2;
+		strY = strY + 20;
+		g2d.drawString(itemGameStr, strX, strY);
+
+		fm = g2d.getFontMetrics();
+		String shopGameStr = "Member: Dylan Hernandez";
+		strWidth = fm.stringWidth(shopGameStr);
+		strX = (this.getWidth() - strWidth)/2;
+		strY = strY + 20;
+		g2d.drawString(shopGameStr, strX, strY);
+
+		fm = g2d.getFontMetrics();
+		String exitGameStr = "Member: Jairo Rosado";
+		strWidth = fm.stringWidth(exitGameStr);
+		strX = (this.getWidth() - strWidth)/2;
+		strY = strY + 20;
+		g2d.drawString(exitGameStr, strX, strY);
+		}
+//		Timer timer = new Timer(7000, new ActionListener(){
+//			public void actionPerformed(ActionEvent e) {
+//				status.setGameOver(true);
+//			}
+//		});
+//		timer.setRepeats(false);
+//		timer.start();
+		
+//		gameLogic.gameOver();
 	}
 //	public void removeBulletBoss(BulletBoss bulletBoss) {
 //		

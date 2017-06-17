@@ -106,7 +106,7 @@ public class GameLogic {
 		bigBullets = new ArrayList<BigBullet>();
 		//numPlatforms = new Platform[5];
 
-		status.setShipsLeft(3);
+		status.setLivesLeft(5);
 		status.setLevel(1);
 		status.setGameOver(false);
 		status.setAsteroidsDestroyed(0);
@@ -150,12 +150,12 @@ public class GameLogic {
 	public void checkConditions(){
 		// check game over conditions
 		if(!status.isGameOver() && status.isGameStarted()){
-			if(status.getShipsLeft() == 0){
+			if(status.getLivesLeft() == 0){
 				gameOver();
 			}
 		}
 		if(!status.isGameWon()){
-			if(gameScreen.getBoom() == 5 || gameScreen.getBoom() == 12 || gameScreen.getBoom() == 24) {
+			if(gameScreen.getBoom() == 5 || gameScreen.getBoom() == 12 || gameScreen.getBoom() == 24 || gameScreen.getBoom() == 26) {
 				gameWon();
 			}
 		

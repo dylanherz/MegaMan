@@ -32,7 +32,7 @@ public class GameScreen2 extends BaseScreen {
 	@Override
 	protected void drawGameOver() {
 		// TODO Auto-generated method stub
-		shipsValueLabel.setForeground(new Color(128, 0, 0));
+		LivesValueLabel.setForeground(new Color(128, 0, 0));
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class GameScreen2 extends BaseScreen {
 	}
 
 	@Override
-	protected void setShipsValueLabel(JLabel shipsValueLabel) {
+	protected void setLivesValueLabel(JLabel LivesValueLabel) {
 		// TODO Auto-generated method stub
 		
 	}

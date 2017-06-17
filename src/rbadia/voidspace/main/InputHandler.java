@@ -76,7 +76,7 @@ public class InputHandler implements KeyListener {
 					if((currentTime - lastExchangeTime > 1000)){
 						lastExchangeTime = currentTime;
 						status.setAsteroidsDestroyed(status.getAsteroidsDestroyed() - 1500);
-						status.setShipsLeft(status.getShipsLeft() + 1);
+						status.setLivesLeft(status.getLivesLeft() + 1);
 					}
 				}
 			}
@@ -125,6 +125,10 @@ public class InputHandler implements KeyListener {
 							gameScreen.restructure();
 							
 						break;
+						
+						case 5:
+							gameScreen.setBoom(27);
+							gameScreen.restructure();
 					}
 					
 				}	

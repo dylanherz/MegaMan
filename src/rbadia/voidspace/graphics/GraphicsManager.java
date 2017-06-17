@@ -40,11 +40,12 @@ public class GraphicsManager {
 	//	private BufferedImage bossImg2;
 	private BufferedImage bigAsteroidImg;
 	private BufferedImage bigAsteroidExplosionImg;
-	private BufferedImage MegaManIntroImg;
-	private BufferedImage MegaManIntro2Img;
-	private BufferedImage MegaManIntro3Img;
-	private BufferedImage MegaManIntro4Img;
-	private BufferedImage BlackScreenImg;
+	private BufferedImage MegaMan1Img;
+	private BufferedImage MegaMan2Img;
+	private BufferedImage MegaMan3Img;
+	private BufferedImage MegaMan4Img;
+	private BufferedImage MegaManMenuImg;
+	private BufferedImage VictoryImg;
 
 	/**
 	 * Creates a new graphics manager and loads the game images.
@@ -71,11 +72,13 @@ public class GraphicsManager {
 			this.bigBulletImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/bigBullet.png"));
 			this.bigAsteroidImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/BigAsteroid.png"));
 			this.bigAsteroidExplosionImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/bigAsteroidExplosion.png"));
-			this.MegaManIntroImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/MegaManIntro.jpg"));
-			this.MegaManIntro2Img = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/MegaManIntro2.jpg"));
-			this.MegaManIntro3Img = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/MegaMan3.jpg"));
-			this.MegaManIntro4Img = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/MegaManIntro4.jpg"));
-			this.BlackScreenImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/BlackScreen.jpg"));
+			this.MegaMan1Img = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/MegaMan1.jpg"));
+			this.MegaMan2Img = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/MegaMan2.jpg"));
+			this.MegaMan3Img = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/MegaMan3.jpg"));
+			this.MegaMan4Img = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/MegaMan4.png"));
+			this.MegaManMenuImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/MegaManMenu.jpg"));
+			this.VictoryImg = ImageIO.read(getClass().getResource("/rbadia/voidspace/graphics/Victory.png"));
+			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "The graphic files are either corrupt or missing.",
 					"VoidSpace - Fatal Error", JOptionPane.ERROR_MESSAGE);
@@ -218,26 +221,32 @@ public class GraphicsManager {
 		g2d.drawImage(bigAsteroidExplosionImg, bigAsteroidExplosion.x, bigAsteroidExplosion.y, observer);
 	}
 
-	public BufferedImage getMegaManIntro3Img() {
-		return MegaManIntro3Img;
-	}
-	
-	public BufferedImage getBlackScreenImg() {
-		return BlackScreenImg;
-	}
-	public BufferedImage getMegaManIntroImg() {
-		return MegaManIntroImg;
+	public BufferedImage getMegaMan1Img() {
+		return MegaMan1Img;
 	}
 
-	public BufferedImage getMegaManIntro2Img() {
-		return MegaManIntro2Img;
+	public BufferedImage getMegaMan2Img() {
+		return MegaMan2Img;
 	}
-	public BufferedImage getMegaManIntro4Img(){
-		return MegaManIntro4Img;
+	public BufferedImage getMegaMan3Img() {
+		return MegaMan3Img;
 	}
+	
+	public BufferedImage getMegaMan4Img(){
+		return MegaMan4Img;
+	}
+	
+	public BufferedImage getMegaManMenuImg(){
+		return MegaManMenuImg;
+	}
+	public BufferedImage getVictoryImg(){
+		return VictoryImg;
+	}
+	
 	public BufferedImage getBoss1Img() {
 		return boss1Img;
 	}
+	
 	public BufferedImage getBulletBossImg() {
 		return bulletBossImg;
 	}
