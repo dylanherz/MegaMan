@@ -123,7 +123,7 @@ public class GameLogic {
 		newMegaMan(gameScreen);
 		newFloor(gameScreen, 9);
 
-		newNumPlatforms(gameScreen, 10);
+		newNumPlatforms(gameScreen, 12);
 
 		//        newPlatform(gameScreen/*, 1*/);
 		//        newPlatform1(gameScreen);

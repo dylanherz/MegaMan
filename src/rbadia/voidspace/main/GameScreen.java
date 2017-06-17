@@ -134,7 +134,7 @@ public class GameScreen extends BaseScreen{
 	/**
 	 * Update the game screen's backbuffer image.
 	 */
-	public void updateScreen(){
+	public void updateScreen() {
 		MegaMan megaMan = gameLogic.getMegaMan();
 		Floor[] floor = gameLogic.getFloor();
 		Platform[] numPlatforms = gameLogic.getNumPlatforms();
@@ -177,43 +177,6 @@ public class GameScreen extends BaseScreen{
 			g2d.drawImage(graphicsMan.getBoss1Img(), null, 210, 40);
 			drawStars(50);
 			
-//			VoidSpaceMain.audioFile = new File("audio/mainGame.wav");
-//			try {
-//				VoidSpaceMain.audioClip.stop();
-//			} finally {
-//				
-//			}
-			
-			
-//			//Music
-//			//allows music to be played while playing
-//			audioFile = new File("audio/BossBattle.wav");
-//			try {
-//				try {
-//					audioStream = AudioSystem.getAudioInputStream(audioFile);
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			} catch (UnsupportedAudioFileException e) {
-//				e.printStackTrace();
-//			}
-//			
-//			AudioFormat format = audioStream.getFormat();
-//			DataLine.Info info = new DataLine.Info(Clip.class, format);
-//			
-//			try {
-//				audioClip = (Clip) AudioSystem.getLine(info);
-//				audioClip.open(audioStream);
-//				audioClip.start();
-//				audioClip.loop(Clip.LOOP_CONTINUOUSLY);
-//			} catch (LineUnavailableException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
 		}
 		// if the game is starting, draw "Get Ready" message
 		if(status.isGameStarting()){
@@ -498,7 +461,7 @@ public class GameScreen extends BaseScreen{
 			boom = boom++;
 		}
 		if(boom == 8){
-			Level3Restructure();
+			restructure();
 			status.setLevel(status.getLevel() + 1);
 			boom = boom++;
 		}
@@ -526,22 +489,21 @@ public class GameScreen extends BaseScreen{
 		levelValueLabel.setText(Long.toString(status.getLevel()));
 		
 }
-	private void music() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	private void bigAsteroid(BigAsteroid bigAsteroid) {
 		if (!status.isNewBigAsteroid() &&  boom > 8 &&  boom <= 18){
 			if((bigAsteroid.getX() + bigAsteroid.getBigAsteroidWidth() > 0)){
 				bigAsteroid.translate(-bigAsteroid.getSpeed2(),(bigAsteroidPos));
 				bigAsteroidPos++;
+				if(bigAsteroidPos == 7){
+					bigAsteroidPos = -7;
+				}
 				
 				graphicsMan.drawbigAsteroid(bigAsteroid, g2d, this);
 			}
 			else if(boom >= 5) {
 				bigAsteroid.setLocation((rand.nextInt(this.getWidth() - bigAsteroid.getBigAsteroidWidth()) + 100 + bigAsteroidPos),
-						((this.getHeight() - bigAsteroid.getBigAsteroidHeight())/(bigAsteroid.getDefaultSpeed2() +1000)));	
+						((this.getHeight() - bigAsteroid.getBigAsteroidHeight())/(bigAsteroid.getDefaultSpeed2() + 400)));	
 						bigAsteroidPos++;
 				}
 			}
@@ -552,7 +514,7 @@ public class GameScreen extends BaseScreen{
 				lastBigAsteroidTime = currentTime;
 				status.setNewBigAsteroid(false);
 				bigAsteroid.setLocation(rand.nextInt(this.getWidth() - bigAsteroid.getBigAsteroidWidth() + 100 + bigAsteroidPos),
-						((this.getHeight() - bigAsteroid.getBigAsteroidHeight())/(bigAsteroid.getDefaultSpeed2() +1000)));		
+						((this.getHeight() - bigAsteroid.getBigAsteroidHeight())/(bigAsteroid.getDefaultSpeed2() + 400)));		
 						bigAsteroidPos++;
 			}
 			else{
@@ -1090,39 +1052,46 @@ public class GameScreen extends BaseScreen{
 	}
 
 	public void restructure(){
-		Platform[] platform = gameLogic.getNumPlatforms();
-		for(int i=0; i<8; i++){
-			if(i<4)	platform[i].setLocation(50+ i*50, getHeight()/2 + 140 - i*40);
-			if(i==4) platform[i].setLocation(50 +i*50, getHeight()/2 + 140 - 3*40);
-			if(i>4){	
-				int n=4;
-				platform[i].setLocation(50 + i*50, getHeight()/2 + 20 + (i-n)*40 );
-				n=n+2;
-				
-			System.out.println("Testing = " + n);
+			Platform[] platform = gameLogic.getNumPlatforms();
+			for(int i=0; i<8; i++){
+				//LEVEL 2
+				if(status.getLevel() == 2 || boom == 2 && boom <= 8){
+				if(i<4)	platform[i].setLocation(50+ i*50, getHeight()/2 + 140 - i*40);
+				if(i==4) platform[i].setLocation(50 +i*50, getHeight()/2 + 140 - 3*40);
+				if(i>4){	
+					int n=4;
+					platform[i].setLocation(50 + i*50, getHeight()/2 + 20 + (i-n)*40 );
+					n=n+2;
+					
+				System.out.println("Testing = " + n);
+				}
 			}
+			System.out.println("BEFORE " + status.getLevel());
+			
+			System.out.println("AFTER " + status.getLevel());
 		}
-		System.out.println("BEFORE " + status.getLevel());
-		
-		System.out.println("AFTER " + status.getLevel());
-	}
-	public void Level3Restructure(){
-		Platform[] platform = gameLogic.getNumPlatforms();
-		for(int i=0; i<8; i++){
-			if(i== 0 || i==7) platform[i].setLocation(122 + i*30, getHeight()/2 -50);
-			if(i== 1 || i== 6)	platform[i].setLocation(50 + i*50, getHeight()/2 + 120);
-			if(i== 3 || i== 4) platform[i].setLocation(15 + i*60, getHeight()/2 + 10);
-//			if(i>4){	
-//				int n=4;
-////				platform[i].setLocation(50 + i*50, getHeight()/2 + 20 + (i-n)*40 );
-//				n=n+2;
-				
-//			System.out.println("Testing = " + n);
-//			}
+			//LEVEL 3
+			for(int i=0; i<8; i++){
+				if(status.getLevel() == 3 || boom == 8 &&  boom <= 18){
+				if(i== 0 || i==7) platform[i].setLocation(122 + i*30, getHeight()/2 -50);
+				if(i== 1 || i== 6)	platform[i].setLocation(50 + i*50, getHeight()/2 + 120);
+				if(i== 3 || i== 4) platform[i].setLocation(15 + i*60, getHeight()/2 + 10);
+			}
+			System.out.println("BEFORE " + status.getLevel());
+			
+			System.out.println("AFTER " + status.getLevel());
 		}
-		System.out.println("BEFORE " + status.getLevel());
-		
-		System.out.println("AFTER " + status.getLevel());
+			//LEVEL 4
+			for(int i=0; i<8; i++){
+				if(status.getLevel() == 4 || boom >= 18) {
+				if(i== 0 || i==7) platform[i].setLocation(122 + i*30, getHeight()/2 + 130);
+				if(i== 1 || i== 6)	platform[i].setLocation(50 + i*50, getHeight()/2 - 20);
+				if(i== 3 || i== 4) platform[i].setLocation(15 + i*60, getHeight()/2 - 80);
+			}
+			System.out.println("BEFORE " + status.getLevel());
+			
+			System.out.println("AFTER " + status.getLevel());
+		}
 	}
 	
 	public void removeAsteroid(Asteroid asteroid){
