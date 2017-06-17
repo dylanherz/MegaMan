@@ -930,7 +930,7 @@ public class GameScreen extends BaseScreen{
 		shipsValueLabel.setText(Integer.toString(status.getShipsLeft()));
 		destroyedValueLabel.setText(Long.toString(status.getAsteroidsDestroyed()));
 		destroyedValueLabel.setText(Long.toString(status.getAsteroids2Destroyed()));
-		destroyedValueLabel.setText(Long.toString(status.getBigAsteroidsDestroyed()));
+		destroyedValueLabel.setText(Long.toString(status.getBigAsteroidDestroyed()));
 		levelValueLabel.setText(Long.toString(status.getLevel()));
 	}
 

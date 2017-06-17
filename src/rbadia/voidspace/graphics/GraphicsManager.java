@@ -11,10 +11,10 @@ import javax.swing.JOptionPane;
 import rbadia.voidspace.model.Asteroid;
 import rbadia.voidspace.model.BigAsteroid;
 import rbadia.voidspace.model.BigBullet;
-//import rbadia.voidspace.model.Boss;
+import rbadia.voidspace.model.Boss;
 import rbadia.voidspace.model.Bullet;
 import rbadia.voidspace.model.Floor;
-//import rbadia.voidspace.model.BulletBoss;
+import rbadia.voidspace.model.BulletBoss;
 //import rbadia.voidspace.model.BulletBoss2;
 import rbadia.voidspace.model.MegaMan;
 import rbadia.voidspace.model.Platform;
@@ -82,7 +82,7 @@ public class GraphicsManager {
 
 	/**
 	 * Draws a ship image to the specified graphics canvas.
-	 * @param ship the ship to draw
+	 * @param megaMan the ship to draw
 	 * @param g2d the graphics canvas
 	 * @param observer object to be notified
 	 */
@@ -148,10 +148,19 @@ public class GraphicsManager {
 	public void drawAsteroid2(Asteroid asteroid2, Graphics2D g2d, ImageObserver observer) {
 		g2d.drawImage(asteroid2Img, asteroid2.x, asteroid2.y, observer);
 	}
+	/**
+	 * Draws an asteroid2 image to the specified graphics canvas.
+	 * @param boss the asteroid to draw
+	 * @param g2d the graphics canvas
+	 * @param observer object to be notified
+	 */
+	public void drawBoss(Boss boss, Graphics2D g2d, ImageObserver observer) {
+		g2d.drawImage(boss1Img, boss.x, boss.y, observer);
+	}
 
 	/**
 	 * Draws an asteroid image to the specified graphics canvas.
-	 * @param asteroid the asteroid to draw
+	 * @param bigAsteroid the asteroid to draw
 	 * @param g2d the graphics canvas
 	 * @param observer object to be notified
 	 */
@@ -160,7 +169,7 @@ public class GraphicsManager {
 	}
 	/**
 	 * Draws a ship explosion image to the specified graphics canvas.
-	 * @param shipExplosion the bounding rectangle of the explosion
+	 * @param megaManExplosion the bounding rectangle of the explosion
 	 * @param g2d the graphics canvas
 	 * @param observer object to be notified
 	 */
@@ -179,7 +188,7 @@ public class GraphicsManager {
 	}
 	/**
 	 * Draws an asteroid explosion image to the specified graphics canvas.
-	 * @param asteroidExplosion the bounding rectangle of the explosion
+	 * @param asteroid2Explosion the bounding rectangle of the explosion
 	 * @param g2d the graphics canvas
 	 * @param observer object to be notified
 	 */
@@ -215,5 +224,15 @@ public class GraphicsManager {
 	}
 	public BufferedImage getBoss1Img() {
 		return boss1Img;
+	}
+
+	/**
+	 * Draws an asteroid explosion image to the specified graphics canvas.
+	 * @param bossExplosion the bounding rectangle of the explosion
+	 * @param g2d the graphics canvas
+	 * @param observer object to be notified
+	 */
+	public void drawBossExplosion(Rectangle bossExplosion, Graphics2D g2d,ImageObserver observer) {
+		g2d.drawImage(asteroidExplosionImg, bossExplosion.x, bossExplosion.y, observer);
 	}
 }
