@@ -85,7 +85,7 @@ public class Asteroid extends Rectangle {
 	 * @return the default asteroid speed
 	 */
 	public int getRandomSpeed(){
-		randomSpeed = rand.nextInt(10);
+		randomSpeed = rand.nextInt(7);
 		return randomSpeed;
 	}
 	
@@ -94,7 +94,7 @@ public class Asteroid extends Rectangle {
 	}
 	
 	public int getRandomSpeed2(){
-		randomSpeed = rand.nextInt(15);
+		randomSpeed = rand.nextInt(9);
 		return randomSpeed;
 	}
 	

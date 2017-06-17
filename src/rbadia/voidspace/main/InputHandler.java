@@ -109,34 +109,30 @@ public class InputHandler implements KeyListener {
 					
 					switch(status.getLevel()){
 						case 2:
-							gameScreen.setBoom(2);
+							gameScreen.setBoom(5);
 							gameScreen.restructure();
 							
 						break;
 						
 						case 3:
-							gameScreen.setBoom(8);
-							gameScreen.Level3Restructure();
+							gameScreen.setBoom(12);
+							gameScreen.restructure();
 							
 						break;
 						
 						case 4:
-							gameScreen.setBoom(18);
+							gameScreen.setBoom(24);
 							gameScreen.restructure();
 							
 						break;
 					}
 					
-				}
-				
-//				else if(!status.isNewAsteroid() && gScreen.getBoom() > 2){
-					
+				}	
 }
-			//WIP
-			//			if(mIsPressed){
-			//				mute=1;
-			//			}
-
+			
+			/*
+			 * Control megaMan's movements
+			 */
 			MegaMan megaMan = gameLogic.getMegaMan();
 			Floor[] floor = gameLogic.getFloor();
 
@@ -167,10 +163,7 @@ public class InputHandler implements KeyListener {
 			}
 		}
 	}
-
-
-
-
+	
 	/**
 	 * Move the megaMan up
 	 * @param megaMan the megaMan
@@ -180,8 +173,6 @@ public class InputHandler implements KeyListener {
 			megaMan.translate(0, -megaMan.getSpeed()*2);
 		}
 	}
-
-
 
 	/**
 	 * Move the megaMan down
@@ -260,10 +251,6 @@ public class InputHandler implements KeyListener {
 				stack=0;
 				gameLogic.newGame();
 
-				//WIP
-				//				if(mute==0){
-				//Music
-				//changes music from "menu music" to "ingame music"
 				VoidSpaceMain.audioClip.close();
 				VoidSpaceMain.audioFile = new File("audio/mainGame.wav");
 				try {
@@ -278,7 +265,7 @@ public class InputHandler implements KeyListener {
 				} catch (LineUnavailableException e1) {
 					e1.printStackTrace();
 				}
-				//
+				
 			}
 					
 			else{
@@ -344,11 +331,6 @@ public class InputHandler implements KeyListener {
 				this.nIsPressed= true;
 			}
 			break;
-
-//		case KeyEvent.VK_M:
-//			this.mIsPressed= true;
-//			break;
-		
 		}
 		e.consume();
 	}

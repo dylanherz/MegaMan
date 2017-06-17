@@ -8,6 +8,7 @@ import rbadia.voidspace.main.GameScreen;
  * Represents a ship/space craft.
  *
  */
+
 public class Boss extends Rectangle {
 	private static final long serialVersionUID = 1L;
 	

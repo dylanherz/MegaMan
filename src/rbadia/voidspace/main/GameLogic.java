@@ -45,6 +45,7 @@ public class GameLogic {
 	private Asteroid asteroid;
 	private Asteroid asteroid2;
 	private BigAsteroid bigAsteroid;
+	private BulletBoss bulletsBoss1;
 	private List<Bullet> bullets;
 	private List<BulletBoss> bulletsBoss;
 	private List<BulletBoss2> bulletsBoss2;
@@ -57,13 +58,6 @@ public class GameLogic {
 
 	private long lastBulletTime;
 	
-	protected int xPos;
-	protected int yPos;
-	protected double platformDirection;
-	protected double platformSpeed;
-	protected int deltaX;
-	protected int deltaY;
-
 	/**
 	 * Create a new game logic handler
 	 * @param gameScreen the game screen
@@ -125,12 +119,13 @@ public class GameLogic {
 		newMegaMan(gameScreen);
 		newFloor(gameScreen, 9);
 
-		newNumPlatforms(gameScreen, 10);
+		newNumPlatforms(gameScreen, 12);
 
 		//        newPlatform(gameScreen/*, 1*/);
 		//        newPlatform1(gameScreen);
 		newBoss(gameScreen);
 		newBoss2(gameScreen);
+		//newBulletBoss(gameScreen);
 		newAsteroid(gameScreen);
 		newAsteroid2(gameScreen);
 		newBigAsteroid(gameScreen);
@@ -160,9 +155,10 @@ public class GameLogic {
 			}
 		}
 		if(!status.isGameWon()){
-			if(gameScreen.getBoom() == 2 || gameScreen.getBoom() == 8 || gameScreen.getBoom() == 18) {
+			if(gameScreen.getBoom() == 5 || gameScreen.getBoom() == 12 || gameScreen.getBoom() == 24) {
 				gameWon();
 			}
+		
 		}
 	}
 	/**
@@ -246,6 +242,13 @@ public class GameLogic {
 		bullets.add(bullet);
 		soundMan.playBulletSound();
 	}
+	
+	public void fireBulletBoss(Boss boss){
+		BulletBoss bulletBoss = new BulletBoss(boss);
+		bulletsBoss.add(bulletBoss);
+		soundMan.playBulletSound();
+		System.out.println("mmmmmm2");
+	}
 
 	/**
 	 * Fire the "Power Shot" bullet
@@ -278,7 +281,7 @@ public class GameLogic {
 	 */
 	public boolean moveBulletBoss(BulletBoss bulletBoss){
 		if(bulletBoss.getY() - bulletBoss.getSpeed() >= 0){
-			bulletBoss.translate(0, bulletBoss.getSpeed());
+			bulletBoss.translate(-bulletBoss.getSpeed(), 0);
 			return false;
 		}
 		else{
@@ -340,44 +343,6 @@ public class GameLogic {
 
 	}
 	
-	public double getxPos() {
-		return xPos;
-	}
-
-	public void setxPos(int xPos) {
-		this.xPos = xPos;
-	}
-
-	public double getyPos() {
-		return yPos;
-	}
-
-	public void setyPos(int yPos) {
-		this.yPos = yPos;
-	}
-
-	public double getPlatformDirection() {
-		return platformDirection;
-	}
-
-	public void setPlatformDirection(double platformDirection) {
-		this.platformDirection = platformDirection;
-	}
-
-	public double getPlatformSpeed() {
-		return platformSpeed;
-	}
-
-	public void setPlatformSpeed(double platformSpeed) {
-		this.platformSpeed = platformSpeed;
-	}
-	
-	public void move(int deltaX, int deltaY){
-		this.xPos = this.xPos + deltaX;
-		this.yPos = this.yPos + deltaY;
-	}
-
-
 	/**
 	 * Create the first boss.
 	 */
@@ -385,7 +350,11 @@ public class GameLogic {
 		this.boss = new Boss(screen);
 		return boss;
 	}
-
+	
+	public BulletBoss newBulletBoss(GameScreen screen){
+		this.bulletsBoss1 = new BulletBoss(screen);
+		return bulletsBoss1;
+	}
 	/**
 	 * Create the second boss.
 	 */
@@ -456,6 +425,13 @@ public class GameLogic {
 
 	public BigAsteroid getBigAsteroid() {
 		return bigAsteroid;
+	}
+	/**
+	 * Returns the asteroid.
+	 * @return the bulletBoss1
+	 */
+	public BulletBoss getBulletBoss1(){
+		return bulletsBoss1;
 	}
 	public int getBossHealth() {
 		return bossHealth;

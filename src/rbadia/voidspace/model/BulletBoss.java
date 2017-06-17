@@ -1,5 +1,7 @@
 package rbadia.voidspace.model;
 import java.awt.Rectangle;
+import java.util.Random;
+import rbadia.voidspace.main.GameScreen;
 
 /**
  * Represents a bullet fired by a ship.
@@ -10,7 +12,7 @@ public class BulletBoss extends Rectangle {
 	private int bulletBossWidth = 8;
 	private int bulletBossHeight = 8;
 	private int speed = 12;
-
+	private Random rand;
 	
 	/**
 	 * Creates a new bullet above the ship, centered on it
@@ -22,6 +24,15 @@ public class BulletBoss extends Rectangle {
 		this.setSize(bulletBossWidth, bulletBossHeight);
 	}
 	
+
+	public BulletBoss(GameScreen screen) {
+		this.setLocation(
+				screen.getWidth() - bulletBossWidth,
+        		rand.nextInt(screen.getHeight() - bulletBossHeight - 8)
+        		);
+		this.setSize( bulletBossWidth, bulletBossHeight);
+	}
+
 
 	/**
 	 * Return the bullet's speed.
